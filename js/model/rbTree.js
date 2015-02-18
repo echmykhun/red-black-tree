@@ -14,7 +14,7 @@ rbNode.prototype = {
     right: null,
     parent: null,
     isRed: false,
-    value: 0,
+    value: "NIL",
     isNil: true,
     //rbNode: function (tree) {
     //    console.log(tree);
@@ -45,7 +45,7 @@ rbNode.prototype = {
         if (!this.isNil) this.parent = y;
 
     },
-    rotateRight: function(){
+    rotateRight: function () {
 
         var y = this.left;
 
@@ -80,9 +80,9 @@ rbTree.prototype = {
     rbTree: function () {
     },
     root: null,//new rbNode(this),
-    insertFixup: function(x){
+    insertFixup: function (x) {
 
-        while(x.id != this.root.id && x.parent.isRed){
+        while (x.id != this.root.id && x.parent.isRed) {
 
 
             if (x.parent.id == x.parent.parent.left.id) {
@@ -137,12 +137,12 @@ rbTree.prototype = {
         this.root.isRed = false;
 
     },
-    insertNode: function(data){
+    insertNode: function (data) {
         var current, parent, x;
         current = this.root;
         parent = null;
-        while(!current.isNil){
-            if(data == current.value) return current;
+        while (!current.isNil) {
+            if (data == current.value) return current;
             parent = current;
             current = data < current.value ? current.left : current.right;
         }
@@ -157,13 +157,13 @@ rbTree.prototype = {
         x.right = new rbNode(this);
         //x.right.isNil = true;
 
-        if(parent){
-            if(x.value < parent.value)
-            parent.left = x;
+        if (parent) {
+            if (x.value < parent.value)
+                parent.left = x;
             else
                 parent.right = x;
 
-        }else{
+        } else {
             this.root = x;
         }
         this.insertFixup(x);
@@ -171,7 +171,7 @@ rbTree.prototype = {
         return x;
 
     },
-    deleteFixup: function(x){
+    deleteFixup: function (x) {
 
         while (x.id != this.root.id && !x.isRed) {
             if (x.id == x.parent.left.id) {
@@ -233,10 +233,8 @@ rbTree.prototype = {
         x.isRed = false;
 
 
-
-
     },
-    deleteNode: function(z){
+    deleteNode: function (z) {
 
         var x, y;
 
@@ -272,53 +270,53 @@ rbTree.prototype = {
 
 
         if (!y.isRed)
-            this.deleteFixup (x);
+            this.deleteFixup(x);
 
         //free (y);
 
 
     },
-    findNode: function(data){
+    findNode: function (data) {
 
         var current = this.root;
-        while(!current.isNil){
-            if(data == current.value){
+        while (!current.isNil) {
+            if (data == current.value) {
                 return current;
-            }else{
+            } else {
                 current = data < current.value ? current.left : current.right;
             }
         }
         return null;
 
     },
-    draw: function(x, y, context, node, level){
+    draw: function (x, y, context, node, level) {
         var n = node || this.root;
         var color = n.isRed ? 'red' : 'black';
         var contentColor = n.isRed ? 'black' : 'red';
         var lvl = level || 1;
-        var val = n.isNil ? "NIL" : n.value;
-        console.log(val);
+        var val = n.value;
+        //console.log(val);
 
         var template = new ContentedCircle(x, y, 20, color, val, contentColor);
         //template.drawFilled(context);
         template.draw(context);
         template.drawContent(context);
 
-        if(n.left){
+        if (n.left) {
             this.draw(x - 250 / lvl, y + 50, context, n.left, lvl + 1);
             context.beginPath();
             context.lineWidth = 1;
             context.moveTo(x, y + 20);
-            context.lineTo(x - 250 / lvl,  y + 50 - 20);
+            context.lineTo(x - 250 / lvl, y + 50 - 20);
             context.stroke();
             context.closePath();
         }
-        if(n.right){
+        if (n.right) {
             this.draw(x + 250 / lvl, y + 50, context, n.right, lvl + 1);
             context.beginPath();
             context.lineWidth = 1;
             context.moveTo(x, y + 20);
-            context.lineTo(x + 250 / lvl,  y + 50 - 20);
+            context.lineTo(x + 250 / lvl, y + 50 - 20);
             context.stroke();
             context.closePath();
         }
@@ -329,4 +327,18 @@ rbTree.prototype = {
 
 };
 
+
+function BFS(node) {
+
+    var marked = [];
+    do {
+
+        console.log(node.value);
+        if(node.left) marked.push(node.left);
+        if(node.right) marked.push(node.right);
+        node = marked.shift();
+
+    } while (marked.length > 0)
+
+}
 

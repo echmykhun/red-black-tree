@@ -42,9 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
     tree.insertNode(6);
     tree.insertNode(22);
     tree.insertNode(27);
-    console.log(tree);
+    //console.log(tree);
 
     tree.draw(500, 25, ctx);
+
+    BFS(tree.root);
 
 
 });

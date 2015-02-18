@@ -70,7 +70,7 @@
             context.arc(this.getPoint().getX(), this.getPoint().getY(), this.getRadius(), 0, 2 * Math.PI, false);
             context.lineWidth = CIRCLE_STROK_WIDTH;
             context.strokeStyle = this.getColor();
-            console.log(this.getColor());
+            //console.log(this.getColor());
             context.stroke();
             context.closePath();
         },
