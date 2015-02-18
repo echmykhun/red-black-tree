@@ -296,25 +296,29 @@ rbTree.prototype = {
         var color = n.isRed ? 'red' : 'black';
         var contentColor = n.isRed ? 'black' : 'red';
         var lvl = level || 1;
-        var val = n.value === null ? "null" : n.value;
+        var val = n.isNil ? "NIL" : n.value;
+        console.log(val);
 
-        var template = new ContentedCircle(x, y, 10, color, val, contentColor);
-        template.drawFilled(context);
+        var template = new ContentedCircle(x, y, 20, color, val, contentColor);
+        //template.drawFilled(context);
+        template.draw(context);
         template.drawContent(context);
 
         if(n.left){
             this.draw(x - 250 / lvl, y + 50, context, n.left, lvl + 1);
             context.beginPath();
-            context.moveTo(x, y);
-            context.lineTo(x - 250 / lvl,  y + 50);
+            context.lineWidth = 1;
+            context.moveTo(x, y + 20);
+            context.lineTo(x - 250 / lvl,  y + 50 - 20);
             context.stroke();
             context.closePath();
         }
         if(n.right){
             this.draw(x + 250 / lvl, y + 50, context, n.right, lvl + 1);
             context.beginPath();
-            context.moveTo(x, y);
-            context.lineTo(x + 250 / lvl,  y + 50);
+            context.lineWidth = 1;
+            context.moveTo(x, y + 20);
+            context.lineTo(x + 250 / lvl,  y + 50 - 20);
             context.stroke();
             context.closePath();
         }

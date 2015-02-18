@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
     tree.insertNode(27);
     console.log(tree);
 
-    tree.draw(500, 20, ctx);
+    tree.draw(500, 25, ctx);
 
 
 });

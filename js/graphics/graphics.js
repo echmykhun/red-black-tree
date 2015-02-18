@@ -6,7 +6,7 @@
     var
         POINT_IS_CONSTRUCTOR_EXEPTION = 'Point is constructor, not a function',
         ARGUMENT_NOT_AN_INSTANCE_OF_POINT = "Argument is not an instance of Point",
-        CIRCLE_STROK_WIDTH = 1;
+        CIRCLE_STROK_WIDTH = 5;
 
     function Point(x, y) {
         if (!(this instanceof Point)) {
@@ -115,7 +115,7 @@
     ContentedCircle.prototype.drawContent = function(context){
         var x = this.getPoint().getX() - this.getRadius() / 2;
         var y =  this.getPoint().getY() + this.getRadius() / 2;
-        context.font = 'italic 18pt Calibri';
+        context.font = 'italic 24pt Calibri';
         context.fillStyle = this.getContentColor();
         context.fillText(this.getContent(), x, y, this.getRadius());
     };
