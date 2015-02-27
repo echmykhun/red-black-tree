@@ -1,7 +1,6 @@
 var COUNT = 0;
 
 var rbNode = function (tree) {
-    //console.log(tree);
     this.tree = tree;
     this.id = ++COUNT;
     this.isNil = true;
@@ -16,11 +15,6 @@ rbNode.prototype = {
     isRed: false,
     value: "NIL",
     isNil: true,
-    //rbNode: function (tree) {
-    //    console.log(tree);
-    //    this.tree = tree;
-    //    this.id = ++COUNT;
-    //},
     rotateLeft: function () {
 
         var y = this.right;
@@ -79,7 +73,7 @@ rbTree.prototype = {
 
     rbTree: function () {
     },
-    root: null,//new rbNode(this),
+    root: null,
     insertFixup: function (x) {
 
         while (x.id != this.root.id && x.parent.isRed) {
@@ -89,42 +83,31 @@ rbTree.prototype = {
                 var y = x.parent.parent.right;
                 if (y.isRed) {
 
-                    /* uncle is RED */
                     x.parent.isRed = false;
                     y.isRed = false;
                     x.parent.parent.isRed = true;
                     x = x.parent.parent;
                 } else {
 
-                    /* uncle is BLACK */
                     if (x.id == x.parent.right.id) {
-                        /* make x a left child */
                         x = x.parent;
                         x.rotateLeft();
                     }
 
-                    /* recolor and rotate */
                     x.parent.isRed = false;
                     x.parent.parent.isRed = true;
                     x.parent.parent.rotateRight();
                 }
             } else {
-
-                /* mirror image of above code */
                 var y = x.parent.parent.left;
                 if (y.isRed) {
-
-                    /* uncle is RED */
                     x.parent.isRed = false;
                     y.isRed = false;
                     x.parent.parent.isRed = true;
                     x = x.parent.parent;
                 } else {
-
-                    /* uncle is BLACK */
                     if (x.id == x.parent.left.id) {
                         x = x.parent;
-                        //rotateRight(x);
                         x.rotateRight();
                     }
                     x.parent.isRed = false;
@@ -153,9 +136,7 @@ rbTree.prototype = {
         x.isNil = false;
 
         x.left = new rbNode(this);
-        //x.left.isNil = true;
         x.right = new rbNode(this);
-        //x.right.isNil = true;
 
         if (parent) {
             if (x.value < parent.value)
@@ -179,7 +160,6 @@ rbTree.prototype = {
                 if (w.isRed) {
                     w.isRed = false;
                     x.parent.isRed = true;
-                    //rotateLeft (x.parent);
                     x.parent.rotateLeft();
                     w = x.parent.right;
                 }
@@ -190,14 +170,12 @@ rbTree.prototype = {
                     if (!w.right.isRed) {
                         w.left.isRed = false;
                         w.isRed = true;
-                        //rotateRight (w);
                         w.rotateRight();
                         w = x.parent.right;
                     }
                     w.isRed = x.parent.isRed;
                     x.parent.isRed = false;
                     w.right.isRed = false;
-                    //rotateLeft (x.parent);
                     x.parent.rotateLeft();
                     x = this.root;
                 }
@@ -206,7 +184,6 @@ rbTree.prototype = {
                 if (w.isRed) {
                     w.isRed = false;
                     x.parent.isRed = true;
-                    //rotateRight (x.parent);
                     x.parent.rotateRight();
                     w = x.parent.left;
                 }
@@ -217,14 +194,12 @@ rbTree.prototype = {
                     if (!w.left.isRed) {
                         w.right.isRed = false;
                         w.isRed = true;
-                        //rotateLeft (w);
                         w.rotateLeft();
                         w = x.parent.left;
                     }
                     w.isRed = x.parent.isRed;
                     x.parent.isRed = false;
                     w.left.isRed = false;
-                    //rotateRight (x.parent);
                     x.parent.rotateRight();
                     x = this.root;
                 }
@@ -242,21 +217,17 @@ rbTree.prototype = {
 
 
         if (z.left.isNil || z.right.isNil) {
-            /* y has a NIL node as a child */
             y = z;
         } else {
-            /* find tree successor with a NIL node as a child */
             y = z.right;
             while (y.left.isNil) y = y.left;
         }
 
-        /* x is y's only child */
         if (!y.left.isNil)
             x = y.left;
         else
             x = y.right;
 
-        /* remove y from the parent chain */
         x.parent = y.parent;
         if (y.parent)
             if (y.id == y.parent.left.id)
@@ -271,8 +242,6 @@ rbTree.prototype = {
 
         if (!y.isRed)
             this.deleteFixup(x);
-
-        //free (y);
 
 
     },
@@ -295,28 +264,26 @@ rbTree.prototype = {
         var contentColor = n.isRed ? 'black' : 'red';
         var lvl = level || 1;
         var val = n.value;
-        //console.log(val);
 
         var template = new ContentedCircle(x, y, 20, color, val, contentColor);
-        //template.drawFilled(context);
         template.draw(context);
         template.drawContent(context);
 
         if (n.left) {
-            this.draw(x - 250 / lvl, y + 50, context, n.left, lvl + 1);
+            this.draw(x - 250 / lvl, y + 80, context, n.left, lvl + 1);
             context.beginPath();
             context.lineWidth = 1;
             context.moveTo(x, y + 20);
-            context.lineTo(x - 250 / lvl, y + 50 - 20);
+            context.lineTo(x - 250 / lvl, y + 80 - 20);
             context.stroke();
             context.closePath();
         }
         if (n.right) {
-            this.draw(x + 250 / lvl, y + 50, context, n.right, lvl + 1);
+            this.draw(x + 250 / lvl, y + 80, context, n.right, lvl + 1);
             context.beginPath();
             context.lineWidth = 1;
             context.moveTo(x, y + 20);
-            context.lineTo(x + 250 / lvl, y + 50 - 20);
+            context.lineTo(x + 250 / lvl, y + 80 - 20);
             context.stroke();
             context.closePath();
         }
