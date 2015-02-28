@@ -220,7 +220,7 @@ rbTree.prototype = {
             y = z;
         } else {
             y = z.right;
-            while (y.left.isNil) y = y.left;
+            while (!y.left.isNil) y = y.left;
         }
 
         if (!y.left.isNil)
@@ -231,13 +231,13 @@ rbTree.prototype = {
         x.parent = y.parent;
         if (y.parent)
             if (y.id == y.parent.left.id)
-                y.parent.left.id = x.id;
+                y.parent.left = x;
             else
-                y.parent.right.id = x.id;
+                y.parent.right = x;
         else
             this.root = x;
 
-        if (y.id != z.id) z.data = y.data;
+        if (y.id != z.id) z.value = y.value;
 
 
         if (!y.isRed)
@@ -299,8 +299,6 @@ function BFS(node) {
 
     var marked = [];
     do {
-
-        console.log(node.value);
         if(node.left) marked.push(node.left);
         if(node.right) marked.push(node.right);
         node = marked.shift();
